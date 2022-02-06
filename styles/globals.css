@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .button {
+    @apply m-2 transform cursor-pointer  rounded-full border p-2 
+        transition duration-100 ease-out hover:shadow-xl active:scale-95 
+        active:bg-gray-300;
+  }
+}
