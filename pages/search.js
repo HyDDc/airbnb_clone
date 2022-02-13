@@ -2,14 +2,12 @@ import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ImageCard from '../components/ImageCard'
+import MapBox from '../components/MapBox'
 import { useRouter } from 'next/dist/client/router'
 import { format } from 'date-fns'
 
 function Search({ searchResults }) {
   const router = useRouter()
-
-  console.log(searchResults)
-
   const { location, startDate, endDate, noGuest } = router.query
 
   const formattedStartDate = format(new Date(startDate), 'dd MMMM yy')
@@ -18,14 +16,16 @@ function Search({ searchResults }) {
   const range = `${formattedEndDate}-${formattedStartDate}`
 
   return (
-    <div>
+    <div className="">
       <Header placeholder={`${location}|${range}|${noGuest}`} />
-      <main>
-        <section>
-          <p className="text-sm">
+      <main className="flex">
+        <section className="flex-grow px-6 pt-14">
+          <p className="text-xs">
             {range} stays for {noGuest} guests!
           </p>
-          <h1 className="text-2xl font-semibold">stay in {location} </h1>
+          <h1 className="mt-2 mb-6 text-3xl font-semibold">
+            stay in {location}{' '}
+          </h1>
           <div className="mb-5 hidden space-x-3 text-gray-800 lg:inline-flex ">
             <p className="button">Connectivity</p>
             <p className="button">Action</p>
@@ -43,9 +43,15 @@ function Search({ searchResults }) {
                 location={item.location}
                 title={item.title}
                 description={item.description}
+                star={item.star}
+                price={item.price}
+                total={item.total}
               />
             ))}
           </div>
+        </section>
+        <section className="hidden xl:inline-flex xl:min-w-[400px]">
+          <MapBox searchResults={searchResults} />
         </section>
       </main>
       <Footer />
